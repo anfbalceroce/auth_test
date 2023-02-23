@@ -14,7 +14,7 @@ export default class AuthController {
         await user.save();
 
         const token = await auth.use("api").login(user, {
-            expiresIn: "2 mins"
+            expiresIn: "30 mins"
         })
 
         return{
@@ -28,7 +28,7 @@ export default class AuthController {
         const password = request.input('password')
         try {
             const token = await auth.use("api").attempt(email, password, {
-                expiresIn: "2 mins"
+                expiresIn: "30 mins"
             })
             return{
                 token,
