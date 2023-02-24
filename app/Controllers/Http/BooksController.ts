@@ -2,15 +2,20 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Book from 'App/Models/Book'
 
 export default class BooksController {
-    public async store({ request }: HttpContextContract) {
+    public async store({ request, response }: HttpContextContract) {
         const book = new Book()
         book.title = request.input('title')
         book.author = request.input('author')
-        await book.save()
-        return {
-            "Libro": book,
-            "msg": "Libro ingresado correctamente",
-            "estado": 200
+        book.publisher = request.input('publisher')
+        book.format = request.input('format')
+        book.print_length = request.input('print_length')
+        book.user_id = request.input('user_id')
+        try {
+            await book.save()
+            response.status(200).json({'msg':`book \"${book.title}\" registered`})
+        } catch (error) {
+            console.log(error)
+            response.status(501).json({'msg':'internal server error'})
         }
     }
 

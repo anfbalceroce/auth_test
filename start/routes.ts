@@ -25,8 +25,12 @@ Route.get('/', async () => {
 })
 
 Route.group( () => {
-  Route.post('/register', 'AuthController.register')
-  Route.post('/login', 'AuthController.login')
+  Route.post('/register', 'UsersController.register')
+  Route.post('/login', 'UsersController.login')
+
+  Route.group( () => {
+    Route.post('/register', 'ProfilesController.register')
+  }).prefix('/profile')
 
   Route.group( () => {
     Route.get('/books', 'BooksController.index')

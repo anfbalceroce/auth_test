@@ -1,19 +1,44 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import Profile from './Profile'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public name: string
+  public id_type: number
+
+  @column()
+  public first_names: string
+
+  @column()
+  public last_names: string
 
   @column()
   public email: string
 
   @column({ serializeAs: null })
   public password: string
+
+  @column()
+  public profile_id: number
+
+  @belongsTo(() => Profile)
+  public profile: BelongsTo<typeof Profile>
+
+  @column()
+  public address: string
+
+  @column()
+  public neighborhood: string
+
+  @column()
+  public municipality: string
+
+  @column()
+  public department: string
 
   @column()
   public rememberMeToken: string | null
